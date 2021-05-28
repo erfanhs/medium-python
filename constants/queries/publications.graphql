@@ -1,0 +1,189 @@
+query UserProfileFollowingCollections($id: ID!) {
+  userResult(id: $id) {
+    __typename
+    ... on User {
+      id
+      followingCollectionConnection {
+        ...UserProfileFollowingCollections_collectionConnection
+        __typename
+      }
+      __typename
+    }
+  }
+}
+
+fragment UserProfileFollowingCollections_collectionConnection on CollectionConnection {
+  collections {
+    __typename
+    id
+  }
+  ...PublisherFollowList_collectionConnection
+  __typename
+}
+
+fragment PublisherFollowList_collectionConnection on CollectionConnection {
+  __typename
+  collections {
+    __typename
+    tagline
+    id
+    name
+    ...collectionUrl_collection
+    ...PublisherAvatar_publisher
+    ...PublisherFollowButton_publisher
+  }
+}
+
+fragment collectionUrl_collection on Collection {
+  id
+  domain
+  slug
+  __typename
+}
+
+fragment PublisherAvatar_publisher on Publisher {
+  __typename
+  ... on Collection {
+    id
+    ...CollectionAvatar_collection
+    __typename
+  }
+  ... on User {
+    id
+    ...UserAvatar_user
+    __typename
+  }
+}
+
+fragment CollectionAvatar_collection on Collection {
+  name
+  avatar {
+    id
+    __typename
+  }
+  ...collectionUrl_collection
+  __typename
+  id
+}
+
+fragment UserAvatar_user on User {
+  __typename
+  username
+  id
+  name
+  imageId
+  mediumMemberAt
+  ...userUrl_user
+}
+
+fragment userUrl_user on User {
+  __typename
+  id
+  customDomainState {
+    live {
+      domain
+      __typename
+    }
+    __typename
+  }
+  username
+  hasSubdomain
+}
+
+fragment PublisherFollowButton_publisher on Publisher {
+  __typename
+  ... on Collection {
+    ...CollectionFollowButton_collection
+    __typename
+    id
+  }
+  ... on User {
+    ...UserFollowButton_user
+    __typename
+    id
+  }
+}
+
+fragment CollectionFollowButton_collection on Collection {
+  __typename
+  id
+  name
+  canToggleEmail
+  slug
+  ...collectionUrl_collection
+  ...SusiClickable_collection
+}
+
+fragment SusiClickable_collection on Collection {
+  ...SusiContainer_collection
+  __typename
+  id
+}
+
+fragment SusiContainer_collection on Collection {
+  name
+  ...SignInOptions_collection
+  ...SignUpOptions_collection
+  __typename
+  id
+}
+
+fragment SignInOptions_collection on Collection {
+  id
+  name
+  __typename
+}
+
+fragment SignUpOptions_collection on Collection {
+  id
+  name
+  __typename
+}
+
+fragment UserFollowButton_user on User {
+  ...UserFollowButtonSignedIn_user
+  ...UserFollowButtonSignedOut_user
+  __typename
+  id
+}
+
+fragment UserFollowButtonSignedIn_user on User {
+  id
+  viewerEdge {
+    id
+    isFollowing
+    __typename
+  }
+  __typename
+}
+
+fragment UserFollowButtonSignedOut_user on User {
+  id
+  ...SusiClickable_user
+  __typename
+}
+
+fragment SusiClickable_user on User {
+  ...SusiContainer_user
+  __typename
+  id
+}
+
+fragment SusiContainer_user on User {
+  ...SignInOptions_user
+  ...SignUpOptions_user
+  __typename
+  id
+}
+
+fragment SignInOptions_user on User {
+  id
+  name
+  __typename
+}
+
+fragment SignUpOptions_user on User {
+  id
+  name
+  __typename
+}
