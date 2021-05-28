@@ -52,7 +52,6 @@ def get_list_of_followers(userid): # rest
         response_dict = json.loads(response.text.split('])}while(1);</x>')[1])
         payload = response_dict['payload']
         for user in payload['value']:
-            print(user['username'])
             followers.append(user)
         try:
             next_id = payload['paging']['next']['to']    
