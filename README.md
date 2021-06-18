@@ -1,4 +1,4 @@
-# medium_private_api
+# medium-python
 A Python wrapper for the medium private API
 
 # Installation:
